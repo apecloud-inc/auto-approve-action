@@ -28972,18 +28972,18 @@ function approve({ token, context, prNumber, reviewMessage, octokitOpts, }) {
             const prHead = pr.head.sha;
             core.info(`Commit SHA is ${prHead}`);
             // Only the most recent review for a user counts towards the review state
-            const latestReviewForUser = [...reviews]
-                .reverse()
-                .find(({ user }) => (user === null || user === void 0 ? void 0 : user.login) === login);
-            const alreadyReviewed = (latestReviewForUser === null || latestReviewForUser === void 0 ? void 0 : latestReviewForUser.state) === "APPROVED";
+            // const latestReviewForUser = [...reviews]
+            //     .reverse()
+            //     .find(({ user }) => (user === null || user === void 0 ? void 0 : user.login) === login);
+            // const alreadyReviewed = (latestReviewForUser === null || latestReviewForUser === void 0 ? void 0 : latestReviewForUser.state) === "APPROVED";
             // If there's an approved review from a user, but there's an outstanding review request,
             // we need to create a new review. Review requests mean that existing "APPROVED" reviews
             // don't count towards the mergeability of the PR.
-            const outstandingReviewRequest = (_b = pr.requested_reviewers) === null || _b === void 0 ? void 0 : _b.some((reviewer) => reviewer.login == login);
-            if (alreadyReviewed && !outstandingReviewRequest) {
-                core.info(`Current user already approved pull request #${prNumber}, nothing to do`);
-                return false;
-            }
+            // const outstandingReviewRequest = (_b = pr.requested_reviewers) === null || _b === void 0 ? void 0 : _b.some((reviewer) => reviewer.login == login);
+            // if (alreadyReviewed && !outstandingReviewRequest) {
+            //     core.info(`Current user already approved pull request #${prNumber}, nothing to do`);
+            //     return false;
+            // }
             core.info(`Pull request #${prNumber} has not been approved yet, creating approving review`);
             yield client.rest.pulls.createReview({
                 owner: context.repo.owner,
